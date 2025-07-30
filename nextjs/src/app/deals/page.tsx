@@ -3,7 +3,12 @@ export const dynamic = "force-dynamic";
 
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
-
+<button
+  className="bg-green-600 text-white px-4 py-2 rounded mb-4"
+  onClick={addDeal}
+>
+  + Add Deal
+</button>
 type Deal = {
   id: string;
   name: string;
