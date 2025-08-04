@@ -71,18 +71,15 @@ export default function DealsPage() {
   return (
     <div className="p-8">
       <h1 className="text-2xl mb-4">Deals</h1>
-
-      <b<button
-  className="bg-green-600 text-white px-4 py-2 rounded mb-4"
-  onClick={addDeal}
->
-  + Add Deal
-</button>
+          <button
         className="bg-green-600 text-white px-4 py-2 rounded mb-4"
         onClick={addDeal}
-      >
-        + Add Deal
+    >>
+         Add Deal
       </button>
+
+ 
+>  
 
       {deals.length === 0 ? (
         <p>No deals yet.</p>
