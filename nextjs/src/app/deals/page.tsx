@@ -69,20 +69,28 @@ export default function DealsPage() {
   }
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl mb-4">Deals</h1>
-          <button
-        className="bg-green-600 text-white px-4 py-2 rounded mb-4"
-        onClick={addDeal}
-    >>
-         Add Deal
-      </button>
+      <div className="p-8">
+    <h1 className="text-2xl mb-4">Deals</h1>
 
- 
->  
+    <button
+      className="bg-green-600 text-white px-4 py-2 rounded mb-4"
+      onClick={addDeal}
+    >
+      Add Deal
+    </button>
 
-      {deals.length === 0 ? (
-        <p>No deals yet.</p>
+    {deals.length === 0 ? (
+      <p>No deals yet.</p>
+    ) : (
+      <ul className="space-y-2">
+        {deals.map((d) => (
+          <li key={d.id} className="border p-4 rounded">
+            <strong>{d.name}</strong> – {d.stage}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
       ) : (
         <ul className="space-y-2">
           {deals.map((d) => (
