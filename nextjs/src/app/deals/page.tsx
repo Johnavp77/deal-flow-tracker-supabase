@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
+
 type Deal = {
   id: string;
   name: string;
@@ -26,7 +27,8 @@ export default function DealsPage() {
 
   useEffect(() => {
     fetchDeals();
-  }, [supabase]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function fetchDeals() {
     const { data, error } = await supabase
@@ -52,7 +54,6 @@ export default function DealsPage() {
       probability: 0,
       notes: null,
     });
-    
     fetchDeals(); // refresh list
   }
 
@@ -69,18 +70,27 @@ export default function DealsPage() {
   }
 
   return (
-      <div className="p-8">
-    <h1 className="text-2xl mb-4">Deals</h1>
+    <div className="p-8">
+      <h1 className="text-2xl mb-4">Deals</h1>
 
-    <button
-      className="bg-green-600 text-white px-4 py-2 rounded mb-4"
-      onClick={addDeal}
-    >
-      Add Deal
-    </button>
+      <button
+        className="bg-green-600 text-white px-4 py-2 rounded mb-4"
+        onClick={addDeal}
+      >
+        Add Deal
+      </button>
 
-    {deals.length === 0 ? (
-      <p>No deals yet.</p>
-    ) :(
-     
-  
+      {deals.length === 0 ? (
+        <p>No deals yet.</p>
+      ) : (
+        <ul className="space-y-2">
+          {deals.map((d) => (
+            <li key={d.id} className="border p-4 rounded">
+              <strong>{d.name}</strong> – {d.stage}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
