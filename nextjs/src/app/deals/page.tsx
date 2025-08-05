@@ -81,7 +81,7 @@ export default function DealsPage() {
 
     {deals.length === 0 ? (
       <p>No deals yet.</p>
-    ) : (
+    ) :(
       <ul className="space-y-2">
         {deals.map((d) => (
           <li key={d.id} className="border p-4 rounded">
