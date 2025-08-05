@@ -75,11 +75,25 @@ export default function DealsPage() {
     fetchDeals(); // refresh list
   }
 
+  function nextStage(s: Stage): Stage {
+    if (s === "Lead") return "Negotiation";
+    if (s === "Negotiation") return "Closed";
+    return "Closed";
+  }
+
+  async function advanceStage(id: string, current: Stage) {
+    const newStage = nextStage(current);
+    await supabase.from("deals").update({ stage: newStage }).eq("id", id);
+    setDeals((prev) =>
+      prev.map((d) => (d.id === id ? { ...d, stage: newStage } : d))
+    );
+  }
+
   function stageColor(s: Stage) {
     return clsx(
-      "px-2 py-1 rounded text-xs font-semibold",
-      s === "Lead" && "bg-blue-100 text-blue-700",
-      s === "Negotiation" && "bg-yellow-100 text-yellow-700",
+      "px-2 py-1 rounded text-xs font-semibold cursor-pointer",
+      s === "Lead" && "bg-blue-100 text-blue-700 hover:bg-blue-200",
+      s === "Negotiation" && "bg-yellow-100 text-yellow-700 hover:bg-yellow-200",
       s === "Closed" && "bg-green-100 text-green-700"
     );
   }
@@ -139,7 +153,13 @@ export default function DealsPage() {
               <span>
                 <strong>{d.name}</strong>
               </span>
-              <span className={stageColor(d.stage)}>{d.stage}</span>
+              <span
+                className={stageColor(d.stage)}
+                onClick={() => advanceStage(d.id, d.stage)}
+                title="Click to advance stage"
+              >
+                {d.stage}
+              </span>
             </li>
           ))}
         </ul>
